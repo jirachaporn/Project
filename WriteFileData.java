@@ -2,7 +2,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-public class WriteFileData {
+public class WriteFileData implements WritefileInterface{
 
     public boolean WriteFileBoom(String user, String pass, String conpass) {
         final File f = new File("DataUserAndPassword.txt");
@@ -27,6 +27,6 @@ public class WriteFileData {
             e.printStackTrace();
         }
         return false;
-    }
+    }   
 }
 // เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง
