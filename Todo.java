@@ -271,7 +271,6 @@ public class Todo extends JFrame implements ActionListener, KeyListener{
             System.out.println("-------------------------------------------");
         }
     }
-
 }
 
     // คีย์บอร์ด
@@ -299,5 +298,4 @@ public class Todo extends JFrame implements ActionListener, KeyListener{
     
     public void keyTyped(KeyEvent e) {
     }
-
 }
