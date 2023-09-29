@@ -128,7 +128,6 @@ public class Create extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
      public void WriteFile() {
@@ -225,5 +224,4 @@ public class Create extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }
