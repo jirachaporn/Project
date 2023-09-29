@@ -137,7 +137,6 @@ public class Login extends JFrame implements ActionListener {
                 cp.add(M);
             } catch (IOException e) {
         }
-
     }
 
     public void checkCredentials() {
@@ -171,12 +170,14 @@ public class Login extends JFrame implements ActionListener {
 
             // ถ้า found เป็นจริงให้ แสดงหน้า loading และไปหน้า ToDoList
             if (found) {
+                System.out.println("Loading....");
                 Loading();
                 Timer timer = new Timer(1500, new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         Load.dispose(); // ปิดหน้าจอโหลด
                         // ไปหน้า ToDoList
-                        new Todo();
+                        Todo td = new Todo();
+                        td.isVisible();
                         dispose();
                     }
                 });
