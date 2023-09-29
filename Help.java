@@ -106,8 +106,8 @@ public class Help extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+    
     UserPassDefault userpass = new UserPassDefault();
     public void actionPerformed(ActionEvent e) {
         if ("back".equals(e.getActionCommand())) {
@@ -123,5 +123,4 @@ public class Help extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }
