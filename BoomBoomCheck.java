@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-public class BoomBoomCheck implements Backend {
+public class BoomBoomCheck {
     
     // ถ้ามีชื่อ User นั้นแล้วจะใช้ชื่อนั้นไม่ได้
     public static boolean isCheckNameBoom(String user) {
@@ -29,9 +29,4 @@ public class BoomBoomCheck implements Backend {
         }
         return false;
     }
-
-    public Object GetValueOfDic() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'GetValueOfDic'");
-    }
-} // เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง เหงาจัง
+}
