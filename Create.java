@@ -2,9 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +17,6 @@ public class Create extends JFrame implements ActionListener {
     private JPanel p;
     private JTextField FieldUser , FieldPass , FieldConPass;
     private JButton b , help , back;
-    final private File f = new File("DataUserAndPassword.txt");
-    private FileWriter fw = null;
-    private BufferedWriter bw = null;
 
     public Create(){
         super("Create account");
@@ -43,6 +38,7 @@ public class Create extends JFrame implements ActionListener {
         p.setBounds(300, 35, 400, 500); 
         p.setBackground(new Color(255,255,255,200));
 
+        // หัวข้อ Create a To Do Account
         TextCreate = new JLabel("Create a To Do Account");
         TextCreate.setFont(new Font("Harlow Solid Itailc", Font.BOLD, 26));
         TextCreate.setBounds(60, 20, 300, 35);
@@ -81,6 +77,7 @@ public class Create extends JFrame implements ActionListener {
         FieldConPass.setBounds(50, 220, 300, 25);
         FieldConPass.setBackground(Color.white);
 
+        // ปุ่ม Create
         b = new JButton("Create");
         b.setBounds(140, 260, 100, 30);
         b.setForeground(Color.white);
@@ -97,6 +94,7 @@ public class Create extends JFrame implements ActionListener {
         help.setActionCommand("help");
         help.addActionListener(this);
 
+        // ปุ่ม Back to login
         back = new JButton("Back to login");
         back.setBounds(10, 460, 120, 30);
         back.setForeground(new Color(100,150,200));
@@ -117,80 +115,40 @@ public class Create extends JFrame implements ActionListener {
         p.add(back);
         
         cp.add(p);
-
-        // วิธีตูน
-
-        try {
-            Image1 = ImageIO.read(new File("Image/3.png"));
-            M = new JLabel(new ImageIcon(Image1));
-            M.setBounds(0, 0, 1000, 600);
-            cp.add(M);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-     public void WriteFile() {
-        try {
-            fw = new FileWriter(f,true); // (f, true) ไม่เขียนทับ
-            bw = new BufferedWriter(fw);
-            bw.write(FieldUser.getText() + "," + FieldPass.getText() + "\n");
-            bw.close();
-            fw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // public Dictionary<String, String> readDataFromFile() {
-    //     Dictionary<String, String> data = new Hashtable<>();
-    //     File file = new File("DataUserAndPassword.txt");
-
-    //     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-    //         String line;
-    //         while ((line = br.readLine()) != null) {
-    //             String[] parts = line.split(",");
-    //             if (parts.length == 2) {
-    //                 data.put(parts[0], parts[1]);
-    //             }
-    //         }
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-
-    //     return data;
-    // }
-
-                WriteFileData write = new WriteFileData();
-            UserPassDefault userpass = new UserPassDefault();
-    public void actionPerformed(ActionEvent e) {
-        if ("create".equals(e.getActionCommand())) {
-            String user = FieldUser.getText();
-            String pass = FieldPass.getText();
-            String conpass = FieldConPass.getText();
             WriteFileData write = new WriteFileData();
             UserPassDefault userpass = new UserPassDefault();
-            if ( !user.isEmpty() && !user.contains(" ") ) {
-                if ( !pass.isEmpty() && !pass.contains(" ") ) {
-                    if ( !conpass.isEmpty() && !conpass.contains(" ") ) {
-                        if ( pass.equals(conpass) ) {
-                            if (!BoomBoomCheck.isCheckNameBoom(user)) {
-                                write.WriteFileBoom(user, pass, conpass);
-                                newFrameComplete();
-                                new Login(userpass.GetValueOfDic());
+
+    public void actionPerformed(ActionEvent e) {
+        if ("create".equals(e.getActionCommand())) {
+            String user = FieldUser.getText(); // สร้าง string user มาเก็บข้อความใน FieldUser (Username)
+            String pass = FieldPass.getText(); // สร้าง string pass มาเก็บข้อความใน FieldPass  (Password)
+            String conpass = FieldConPass.getText();   // สร้าง string conpass มาเก็บข้อความใน FieldConPass (Confirm Password) 
+            if ( !user.isEmpty() && !user.contains(" ") ) { // ถ้า FieldUser ไม่ว่าง
+                if ( !pass.isEmpty() && !pass.contains(" ") ) { // ถ้า FieldPass ไม่ว่าง
+                    if ( !conpass.isEmpty() && !conpass.contains(" ") ) { // ถ้า FieldConPass ไม่ว่าง
+                        if ( pass.equals(conpass) ) { // ถ้า FieldPass ตรงกับ FieldConPass
+                            if (!BoomBoomCheck.isCheckNameBoom(user)) { //  ให้เรียกใช้ เมทตอด isCheckNameBoom เพื่อเช็คว่ามี user นั้น หรือยัง
+                                write.WriteFileBoom(user, pass, conpass); //  ส่งข้อมูลไปให้ WriteFileBoom เพื่อสร้างบัญชี 
+                                newFrameComplete(); // แสดงข้อความ Create New Account Successfully ✓
+                                new Login(userpass.GetValueOfDic()); // เปิดหน้า Login
                                 dispose();
-                            } else System.out.println(">>> This username is already taken. Please create a new one. <<<");                          
-                        } else System.out.println(">>>>> Passwords do not match. Please enter again. <<<<<");
-                    } else newFrameConfirmPass();
-                } else newFrameWrongPass();
-            } else newFrameWrong();
+                            } else System.out.println(">>> This username is already taken. Please create a new one. <<<");  //  ถ้า user ซ้ำ ให่แสดงข้อความ This username is already taken. Please create a new one.                   
+                        } else System.out.println(">>>>> Passwords do not match. Please enter again. <<<<<"); // ถ้า FieldPass ไม่ตรงกับ FieldConPass ให้แสดงข้อความ Passwords do not match. Please enter again.
+                    } else newFrameConfirmPass(); // ถ้า FieldConPass ว่างให้แสดงข้อความ Fill in the Confirm password field.
+                } else newFrameWrongPass(); // ถ้า FieldPass ว่างให้แสดงข้อความ Fill in the Password field.
+            } else newFrameWrong(); // ถ้า FieldUser ว่างให้แสดงข้อความ FieldPass ว่าง Fill in the Username field.
         }
 
+        // ไปหน้า help
         if("help".equals(e.getActionCommand())) {
             Help H = new Help();
             H.setVisible(true);
             dispose();
         }
+
+        // ไปหน้า Login
         if ("back".equals(e.getActionCommand())) {
             new Login(userpass.GetValueOfDic());
             dispose();
@@ -218,6 +176,17 @@ public class Create extends JFrame implements ActionListener {
     }
 
     public void Finally(){
+
+        // เพิ่มรูปพื้นหลัง
+        try {
+            Image1 = ImageIO.read(new File("Image/3.png"));
+            M = new JLabel(new ImageIcon(Image1));
+            M.setBounds(0, 0, 1000, 600);
+            cp.add(M);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         setSize(1000, 600);
         setVisible(true);
         setResizable(false);

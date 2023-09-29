@@ -23,7 +23,7 @@ public class Login extends JFrame implements ActionListener {
     final private File file = new File("DataUserAndPassword.txt");
     private FileReader fr;
     private BufferedReader br;
-    public Dictionary<String, String> key = new Hashtable<>(); // เพ่ิ่ม
+    public Dictionary<String, String> key = new Hashtable<>();
 
     public Login(Dictionary<String, String> loginOriginal) {
         super("Account");
@@ -31,7 +31,7 @@ public class Login extends JFrame implements ActionListener {
         Initial();
         setComponent();
         Finally();
-        ImageIcon img = new ImageIcon("Image/Icon.png");
+        ImageIcon img = new ImageIcon("Image/Icon.png"); // กำหนด Icon ของโปรแกรม
         this.setIconImage(img.getImage());
     }
 
@@ -76,10 +76,9 @@ public class Login extends JFrame implements ActionListener {
         textPass.setBackground(Color.white);
 
         // ดูรหัสผ่าน
-        show = new JCheckBox("Show Password", false);
+        show = new JCheckBox("Show Password", false); 
         show.setBounds(50, 190, 120, 20);
-        // show.setBackground(Color.white);
-        show.setActionCommand("Show");
+        show.setActionCommand("Show"); 
         show.addActionListener(this);
 
         // ปุ่ม Login
@@ -129,14 +128,7 @@ public class Login extends JFrame implements ActionListener {
         p.add(show); // ปุ่ม show password
         cp.add(p);
 
-        // เพิ่มรูป
-        try {
-                Image1 = ImageIO.read(new File("Image/3.png"));
-                M = new JLabel(new ImageIcon(Image1));
-                M.setBounds(0, 0, 1000, 600);
-                cp.add(M);
-            } catch (IOException e) {
-        }
+        
     }
 
     public void checkCredentials() {
@@ -149,11 +141,10 @@ public class Login extends JFrame implements ActionListener {
             fr = new FileReader(file);
             br = new BufferedReader(fr);
             String line;
-            boolean found = false;
+            boolean found = false; 
 
             while ((line = br.readLine()) != null) {
-                // แยกข้อมูลในบรรทัดเป็นคีย์และค่า โดยใช้เครื่องหมาย ','
-                String[] parts = line.split(",");
+                String[] parts = line.split(","); // แยกข้อมูลในบรรทัดเป็นคีย์และค่า โดยใช้เครื่องหมาย ','
                 if (parts.length == 2) {
                     String username = parts[0]; // เก็บตำแหนงแรกไว้ใน username
                     String password = parts[1]; // เก็บตำแหนงที่สองไว้ใน password
@@ -176,25 +167,49 @@ public class Login extends JFrame implements ActionListener {
                     public void actionPerformed(ActionEvent e) {
                         Load.dispose(); // ปิดหน้าจอโหลด
                         // ไปหน้า ToDoList
-                        Todo td = new Todo();
-                        td.isVisible();
+                        new Todo();
                         dispose();
                     }
                 });
                 timer.setRepeats(false); // ตั้งค่าให้ Timer ไม่ทำงานซ้ำ
                 timer.start(); // เริ่มการทำงานของ Timer
             } else if (((Hashtable<String, String>) key).containsKey(enteredUsername)) { //หาค่า User ใน Dictionary ว่าตรงกับที่รับมาหรือไม่
-                if ( key.get(enteredUsername).equals(enteredPassword) ) { 
-                    new Todo();
-                    dispose();
-                } else JOptionPane.showMessageDialog(cp, "Password blank or incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else JOptionPane.showMessageDialog(cp, "Username not found", "Error", JOptionPane.ERROR_MESSAGE);
+                if ( key.get(enteredUsername).equals(enteredPassword) ) {  // ถ้า kry enteredUsername ตรงกับ enteredPassword 
+                    System.out.println("Loading....");
+                    Loading(); // เรียก เมทตอด Loading();
+                    Timer timer = new Timer(1500, new ActionListener() { // ใช้ Timer ทำให้หน้า Loading ทำงาน 1.5 วิ แล้วปิดหน้า Loading ลงไป
+                    public void actionPerformed(ActionEvent e) {
+                        Load.dispose(); // ปิดหน้าจอโหลด
+                        // ไปหน้า ToDoList
+                        new Todo();
+                        isVisible();
+                        dispose();
+                    }
+                });
+                    timer.setRepeats(false); // ตั้งค่าให้ Timer ไม่ทำงานซ้ำ
+                    timer.start(); // เริ่มการทำงานของ Timer
+                }
+
+                    // ถ้า enteredUsername ว่างให้แสดงข้อความ Fill in the Username field !!!
+                } else  if(enteredUsername.isEmpty()){
+                        JOptionPane.showMessageDialog(cp, "Fill in the Username field !!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    
+                    // ถ้า enteredPassword ว่างให้แสดงข้อความ Fill in the Password field !!!
+                } else if(enteredPassword.isEmpty()){
+                        JOptionPane.showMessageDialog(cp, "Fill in the Password field !!!", "Error", JOptionPane.ERROR_MESSAGE);
+                        
+                    // ถ้าไม่ตรงกับเงื่อนไขไหนเลยให้แสดงข้อความ Password or username is incorrect. 
+                    } else  
+                        JOptionPane.showMessageDialog(cp, "Password or username is incorrect.","Error", JOptionPane.ERROR_MESSAGE);
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // กดปุ่มแล้วไปหน้าอื่น
+    // กดปุ่มแล้วไปหน้าอื่น            
     public void actionPerformed(ActionEvent e) {
 
         // ไปหน้า To do
@@ -221,36 +236,50 @@ public class Login extends JFrame implements ActionListener {
         }
 
         // CheckBox Show Password
-        if ("Show".equals(e.getActionCommand())) {
-            if (show.isSelected()) {
-                textPass.setEchoChar((char) 0);
+        if ("Show".equals(e.getActionCommand())) { // ถ้ากด show 
+            if (show.isSelected()) {  // ตรวจสอบว่าปุ่ม show ถูกเลือกอยู่หรือไม่
+                textPass.setEchoChar((char) 0); // ถ้าาปุ่ม show ถูกเลือกอยู่ให้แสดงข้อความ
             } else
-                textPass.setEchoChar('•');
+                textPass.setEchoChar('•'); // ถ้าาปุ่ม show ไม่ถูกเลือกให้แสดงเป็น ••• 
         }
     }
 
     public void Loading() {
 
+        // สร้าง JDialog  
         Load = new JDialog();
-        Icon Image2 = new ImageIcon(this.getClass().getResource("Image/l1copy.gif"));
+        Icon Image2 = new ImageIcon(this.getClass().getResource("Image/l1 copy.gif")); // นำ gif มาใส่
         l1 = new JLabel(Image2);
-        l1.setBounds(190, 60, 100, 100);
+        l1.setBounds(190, 60, 100, 100); 
+
+        // กำหนด Icon ของโปรแกรม
         ImageIcon img = new ImageIcon("Image/Icon.png");
         Load.setIconImage(img.getImage());
 
+        // ใส่ข้อความ Loading . . .
         l2 = new JLabel("Loading . . .");
         l2.setFont(new Font("Harlow Solid Itailc", Font.PLAIN, 20));
         l2.setBounds(190, 140, 100, 100);
 
         Load.add(l1);
         Load.add(l2);
-        Load.setLayout(null);
-        Load.setVisible(true);
-        Load.setSize(500, 300);
-        Load.setLocationRelativeTo(null);
+        Load.setLayout(null); 
+        Load.setVisible(true); 
+        Load.setSize(500, 300); // ตั้งขนาด 500*300
+        Load.setLocationRelativeTo(null); // ทำให้ปรากฎกลางจอ
     }
 
     public void Finally() {
+
+        // เพิ่มรูปพื้นหลัง
+        try {
+                Image1 = ImageIO.read(new File("Image/3.png"));
+                M = new JLabel(new ImageIcon(Image1));
+                M.setBounds(0, 0, 1000, 600);
+                cp.add(M);
+            } catch (IOException e) {
+        }
+
         setSize(1000, 600);
         setVisible(true);
         setResizable(false);

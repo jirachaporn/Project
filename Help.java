@@ -22,7 +22,7 @@ public class Help extends JFrame implements ActionListener {
         Initial();
         setComponent();
         Finally() ;
-        ImageIcon img = new ImageIcon("Image/Icon.png");
+        ImageIcon img = new ImageIcon("Image/Icon.png"); // กำหนด Icon ของโปรแกรม
         this.setIconImage(img.getImage());
     }
     public void Initial(){
@@ -31,52 +31,61 @@ public class Help extends JFrame implements ActionListener {
     }
 
     public void setComponent(){
-        UserPassDefault userpass = new UserPassDefault();
+
         p = new JPanel();
         p.setLayout(null);
         p.setBounds(300, 35, 400, 500); 
         p.setBackground(new Color(255,255,255,100));
 
+        // หัวข้อ Help
         t1 = new JLabel("Help");
         t1.setFont(new Font("Harlow Solid Itailc", Font.BOLD , 30));
         t1.setBounds(170, 20, 170, 35);
         t1.setForeground(Color.black);
 
+        // text Contact the developer
         t2 = new JLabel("Contact the developer");
         t2.setFont(new Font("Harlow Solid Itailc", Font.BOLD , 16));
         t2.setBounds(50, 70, 230, 35);
         t2.setForeground(Color.black);
 
+        // text Front-end
         f = new JLabel("Front-end");
         f.setFont(new Font("Harlow Solid Itailc", Font.BOLD , 15));
         f.setBounds(50, 95, 230, 35);
         f.setForeground(Color.black);
 
+        // text Name : Jirachaporn Pinpan 6521600176
         t3 = new JLabel("Name : Jirachaporn Pinpan 6521600176");
         t3.setFont(new Font("Harlow Solid Itailc", Font.PLAIN , 15));
         t3.setBounds(50, 115, 300, 35);
         t3.setForeground(Color.black);
 
+        // text Email : Jirachaporn.p@ku.th
         t4 = new JLabel("Email : Jirachaporn.p@ku.th");
         t4.setFont(new Font("Harlow Solid Itailc", Font.PLAIN , 15));
         t4.setBounds(50, 135, 300, 35);
         t4.setForeground(Color.black);
 
+        // text Back-end
         b = new JLabel("Back-end");
         b.setFont(new Font("Harlow Solid Itailc", Font.BOLD , 15));
         b.setBounds(50, 165, 230, 35);
         b.setForeground(Color.black);
 
+        // text Name : Ittiphon Kongkaew 6521601954
         t5 = new JLabel("Name : Ittiphon Kongkaew 6521601954");
         t5.setFont(new Font("Harlow Solid Itailc", Font.PLAIN , 15));
         t5.setBounds(50, 185, 300, 35);
         t5.setForeground(Color.black);
 
+        // text Email : Ittiphon.k@ku.th
         t6 = new JLabel("Email : Ittiphon.k@ku.th");
         t6.setFont(new Font("Harlow Solid Itailc", Font.PLAIN , 15));
         t6.setBounds(50, 205, 300, 35);
         t6.setForeground(Color.black);
 
+        // text Back to login
         back = new JButton("Back to login");
         back.setBounds(10, 460, 120, 30);
         back.setForeground(new Color(100,150,200));
@@ -96,8 +105,22 @@ public class Help extends JFrame implements ActionListener {
         p.add(back);
         cp.add(p);
 
-        // วิธีตูน
+        
+    }
+    
+    UserPassDefault userpass = new UserPassDefault();
+    public void actionPerformed(ActionEvent e) {
 
+        // กลับไปหน้า Login
+        if ("back".equals(e.getActionCommand())) {
+            new Login(userpass.GetValueOfDic());
+            dispose();
+            } 
+    }
+
+    public void Finally(){
+
+        // เพิ่มรูปพื้นหลัง
         try {
             Image1 = ImageIO.read(new File("Image/3.png"));
             M = new JLabel(new ImageIcon(Image1));
@@ -106,17 +129,7 @@ public class Help extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    UserPassDefault userpass = new UserPassDefault();
-    public void actionPerformed(ActionEvent e) {
-        if ("back".equals(e.getActionCommand())) {
-            new Login(userpass.GetValueOfDic());
-            dispose();
-            } 
-    }
 
-    public void Finally(){
         setSize(1000, 600);
         setVisible(true);
         setResizable(false);

@@ -6,7 +6,7 @@ public class BoomBoomCheck {
     
     // ถ้ามีชื่อ User นั้นแล้วจะใช้ชื่อนั้นไม่ได้
     public static boolean isCheckNameBoom(String user) {
-        final File filename = new File("DataUserAndPassword.txt");
+        final File filename = new File("DataUserAndPassword.txt");  //อ่านจากไฟล์ DataUserAndPassword.txt
         FileReader fr = null;
         BufferedReader br = null;
         String line;
@@ -17,11 +17,10 @@ public class BoomBoomCheck {
             br = new BufferedReader(fr);
 
             while ((line = br.readLine()) != null) {
-                originalUser = line.split(",");
-                if (originalUser[0].equals(user)) {                  
-                    br.close();
-                    fr.close();
-                    return true;
+                originalUser = line.split(",");  // แยกข้อมูลในบรรทัดเป็นคีย์และค่า โดยใช้เครื่องหมาย ','
+                if (originalUser[0].equals(user)) {    // ถ้า originalUser ตรงกับ user           
+                    br.close(); fr.close();
+                    return true; 
                 }
             }
         } catch (Exception e) {
